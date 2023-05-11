@@ -3,4 +3,4 @@ project(Robo)
 
 set(CMAKE_CXX_STANDARD 20)
 
-add_executable(Robo src/main.cpp src/main.cpp)
+add_executable(Robo src/Common/Engine.cpp src/Common/Engine.h src/Common/World.cpp src/Common/World.h src/Common/World.h src/Common/Timing.cpp src/Common/Timing.h src/Server/ServerMain.cpp src/Server/Server.cpp src/Server/Server.h)
