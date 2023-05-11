@@ -1,7 +1,6 @@
 #ifndef ROBO_CLOCK_H
 #define ROBO_CLOCK_H
 
-#include <cstdint>
 class Clock {
  public:
   static Clock Instance;

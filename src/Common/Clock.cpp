@@ -1,10 +1,7 @@
 #include "Clock.h"
 
 #if _WIN32
-#include <profileapi.h>
-#include <winnt.h>
-
-#include <chrono>
+#include <windows.h>
 #else
 #include <chrono>
 using namespace std::chrono;

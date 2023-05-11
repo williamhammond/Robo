@@ -1,6 +1,6 @@
 #include "Engine.h"
 
-std::unique_ptr<Engine> Engine::sInstance;
+std::unique_ptr<Engine> Engine::Instance;
 
 int Engine::Run() {
   double time = 0;
