@@ -5,7 +5,7 @@ int Server::Run() {
 }
 
 bool Server::StaticInit() {
-  sInstance.reset(new Server());
+  Instance.reset(new Server());
 
   return true;
 }

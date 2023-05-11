@@ -7,7 +7,7 @@
 
 class Engine {
  public:
-  static std::unique_ptr<Engine> sInstance;
+  static std::unique_ptr<Engine> Instance;
 
   virtual ~Engine();
   virtual int Run();
