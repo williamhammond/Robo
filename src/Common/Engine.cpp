@@ -3,22 +3,12 @@
 std::unique_ptr<Engine> Engine::sInstance;
 
 int Engine::Run() {
-  return DoRunLoop();
-}
-
-Engine::Engine() {
-  quit = false;
-}
-
-Engine::~Engine() = default;
-
-int Engine::DoRunLoop() {
   double time = 0;
   const double dt = 0.01;
-  double currentTime = Timing::sInstance.GetTime();
+  double currentTime = Clock::Instance.GetTime();
   double accumulator = 0.0;
   while (!quit) {
-    double newTime = Timing::sInstance.GetTime();
+    double newTime = Clock::Instance.GetTime();
     double frameTime = newTime - currentTime;
     currentTime = newTime;
 
@@ -27,12 +17,18 @@ int Engine::DoRunLoop() {
       accumulator -= dt;
       time += dt;
     }
-    DoFrame();
+    Update();
   }
 
   return 0;
 }
 
-void Engine::DoFrame() {
-  World::sInstance->Update();
+Engine::Engine() {
+  quit = false;
+}
+
+Engine::~Engine() = default;
+
+void Engine::Update() {
+  World::Instance->Update();
 }

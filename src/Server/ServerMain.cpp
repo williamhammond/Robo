@@ -21,7 +21,7 @@ int main(int argc, const char** argv) {
   __argv = argv;
 
   if (Server::StaticInit()) {
-    return Server::sInstance->Run();
+    return Server::Instance->Run();
   } else {
     // error
     return 1;

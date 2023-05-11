@@ -2,27 +2,25 @@
 #define ROBO_ENGINE_H
 #include <memory>
 
-#include "Timing.h"
+#include "Clock.h"
 #include "World.h"
 
 class Engine {
  public:
-  virtual ~Engine();
   static std::unique_ptr<Engine> sInstance;
 
+  virtual ~Engine();
   virtual int Run();
-  void SetShouldKeepRunning(bool inShouldKeepRunning) {
-    quit = inShouldKeepRunning;
+
+  void SetQuit(bool shouldQuit) {
+    quit = shouldQuit;
   }
 
  protected:
   Engine();
-
-  virtual void DoFrame();
+  virtual void Update();
 
  private:
-  int DoRunLoop();
-
   bool quit;
 };
 

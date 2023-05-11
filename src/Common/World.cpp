@@ -1,9 +1,9 @@
 #include "World.h"
 
-std::unique_ptr<World> World::sInstance;
+std::unique_ptr<World> World::Instance;
 
 void World::StaticInit() {
-  sInstance.reset(new World());
+  Instance.reset(new World());
 }
 void World::Update() {}
 
