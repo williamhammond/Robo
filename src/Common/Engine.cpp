@@ -3,7 +3,6 @@
 std::unique_ptr<Engine> Engine::Instance;
 
 int Engine::Run() {
-  double time = 0;
   const double dt = 0.01;
   double currentTime = Clock::Instance.GetTime();
   double accumulator = 0.0;
@@ -15,7 +14,6 @@ int Engine::Run() {
     accumulator += frameTime;
     while (accumulator >= dt) {
       accumulator -= dt;
-      time += dt;
     }
     Update();
   }
