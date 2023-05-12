@@ -1,6 +1,6 @@
 #include "Clock.h"
 
-#if _WIN32
+#if defined(_WIN32)
 #include <windows.h>
 #else
 #include <chrono>
@@ -10,7 +10,7 @@ using namespace std::chrono;
 Clock Clock::Instance;
 
 namespace {
-#if _WIN32
+#if defined(_WIN32)
 LARGE_INTEGER sStartTime = {0};
 #else
 high_resolution_clock::time_point sStartTime;
@@ -18,7 +18,7 @@ high_resolution_clock::time_point sStartTime;
 }  // namespace
 
 Clock::Clock() {
-#if _WIN32
+#if defined(_WIN32)
   LARGE_INTEGER perfFreq;
   QueryPerformanceFrequency(&perfFreq);
   perfCountDuration = 1.0 / perfFreq.QuadPart;
@@ -30,7 +30,7 @@ Clock::Clock() {
 }
 
 double Clock::GetTime() const {
-#if _WIN32
+#if defined(_WIN32)
   LARGE_INTEGER curTime, timeSinceStart;
   QueryPerformanceCounter(&curTime);
 
