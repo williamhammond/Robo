@@ -11,7 +11,7 @@ Clock Clock::Instance;
 
 namespace {
 #if defined(_WIN32)
-LARGE_INTEGER sStartTime = {0};
+LARGE_INTEGER sStartTime = {};
 #else
 high_resolution_clock::time_point sStartTime;
 #endif
@@ -21,7 +21,7 @@ Clock::Clock() {
 #if defined(_WIN32)
   LARGE_INTEGER perfFreq;
   QueryPerformanceFrequency(&perfFreq);
-  perfCountDuration = 1.0 / perfFreq.QuadPart;
+  perfCountDuration = 1.0 / static_cast<double>(perfFreq.QuadPart);
 
   QueryPerformanceCounter(&sStartTime);
 #else
@@ -36,7 +36,7 @@ double Clock::GetTime() const {
 
   timeSinceStart.QuadPart = curTime.QuadPart - sStartTime.QuadPart;
 
-  return timeSinceStart.QuadPart * perfCountDuration;
+  return static_cast<double>(timeSinceStart.QuadPart) * perfCountDuration;
 #else
   auto now = high_resolution_clock::now();
   auto ms = duration_cast<milliseconds>(now - sStartTime).count();

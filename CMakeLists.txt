@@ -5,6 +5,10 @@ project(Robo
         DESCRIPTION "Test project for game networking"
         LANGUAGES CXX)
 
+set(CMAKE_BINARY_DIR build/)
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 # Only do these if this is the main project, and not if it is included through add_subdirectory
 if (CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
     set(CMAKE_CXX_STANDARD 20)
@@ -28,3 +32,22 @@ FetchContent_MakeAvailable(fmtlib)
 
 add_subdirectory(src/Common)
 add_subdirectory(src/Server)
+
+set(CMAKE_INSTALL_PREFIX "./build/install")
+if (UNIX)
+    include(GNUInstallDirs)
+else ()
+    if (WIN32)
+        set(CMAKE_INSTALL_LIBDIR "lib")
+        set(CMAKE_INSTALL_DATADIR "share")
+        set(CMAKE_INSTALL_INCLUDEDIR "include")
+        set(CMAKE_INSTALL_BINDIR "bin")
+        message(STATUS "Setting installation destination on Windows to: ${CMAKE_INSTALL_PREFIX} ")
+    else ()
+        message(FATAL_ERROR " System not UNIX nor WIN32 - not implemented yet ")
+    endif ()
+endif ()
+install(TARGETS Server Common
+        RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+        ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
