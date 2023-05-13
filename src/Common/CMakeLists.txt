@@ -1,7 +1,7 @@
 file(GLOB_RECURSE SOURCE_FILES *.cpp)
 file(GLOB_RECURSE HEADER_FILES *.h)
 
-add_library(Common ${SOURCE_FILES} ${HEADER_FILES})
+add_library(Common ${SOURCE_FILES} ${HEADER_FILES} GameObject.cpp GameObject.h)
 
 if (MSVC)
     target_compile_options(Common PRIVATE /W4 /WX)
