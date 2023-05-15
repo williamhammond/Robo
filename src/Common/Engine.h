@@ -16,11 +16,16 @@ class Engine {
     quit = shouldQuit;
   }
 
+  int GetFramesPerSecond() {
+    return framesPerSecond;
+  }
+
  protected:
   Engine();
   virtual void Update();
 
  private:
+  int framesPerSecond;
   bool quit;
 };
 

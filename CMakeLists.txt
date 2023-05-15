@@ -28,13 +28,12 @@ FetchContent_Declare(
         fmtlib
         GIT_REPOSITORY https://github.com/fmtlib/fmt.git
         GIT_TAG 10.0.0)
-FetchContent_MakeAvailable(fmtlib)
-
 FetchContent_Declare(
         spdlog
         GIT_REPOSITORY git@github.com:gabime/spdlog.git
         GIT_TAG v1.11.0)
-FetchContent_MakeAvailable(spdlog)
+
+FetchContent_MakeAvailable(spdlog fmtlib)
 
 add_subdirectory(src/Common)
 add_subdirectory(src/Server)
