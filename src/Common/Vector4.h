@@ -3,7 +3,7 @@
 
 #include <sstream>
 
-#include "Fmath.h"
+#include "FMath.h"
 
 class Vector4 {
  private:
