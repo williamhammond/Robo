@@ -1,4 +1,7 @@
 #include <memory>
+#include <vector>
+
+#include "GameObject.h"
 
 #ifndef ROBO_WORLD_H
 class World {
@@ -9,6 +12,7 @@ class World {
 
  private:
   World();
+  std::vector<GameObjectPtr> gameObjects;
 };
 #define ROBO_WORLD_H
 
