@@ -30,9 +30,8 @@ FetchContent_Declare(
         GIT_TAG 10.0.0)
 FetchContent_Declare(
         spdlog
-        GIT_REPOSITORY git@github.com:gabime/spdlog.git
+        GIT_REPOSITORY https://github.com/gabime/spdlog.git
         GIT_TAG v1.11.0)
-
 FetchContent_MakeAvailable(spdlog fmtlib)
 
 add_subdirectory(src/Common)
