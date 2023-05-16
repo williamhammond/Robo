@@ -1,6 +1,7 @@
 #include "Engine.h"
 
 #define SPDLOG_ACTIVE_LEVEL SPDLOG_LEVEL_TRACE
+
 #include "spdlog/spdlog.h"
 
 std::unique_ptr<Engine> Engine::Instance;

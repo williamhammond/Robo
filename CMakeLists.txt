@@ -32,7 +32,19 @@ FetchContent_Declare(
         spdlog
         GIT_REPOSITORY https://github.com/gabime/spdlog.git
         GIT_TAG v1.11.0)
-FetchContent_MakeAvailable(spdlog fmtlib)
+FetchContent_Declare(
+        SDL2
+        GIT_REPOSITORY https://github.com/libsdl-org/SDL.git
+        GIT_TAG release-2.26.5)
+
+if (NOT sdl2_POPULATED)
+    FetchContent_Populate(SDL2)
+    message(STATUS "Catch source dir: ${sdl2_SOURCE_DIR}")
+    message(STATUS "Catch binary dir: ${sdl2_BINARY_DIR}")
+    add_subdirectory(${sdl2_SOURCE_DIR} ${sdl2_BINARY_DIR})
+endif ()
+
+FetchContent_MakeAvailable(spdlog fmtlib SDL2)
 
 add_subdirectory(src/Common)
 add_subdirectory(src/Server)
