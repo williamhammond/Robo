@@ -13,3 +13,8 @@ void World::Update() {
     gameObject->Update();
   }
 }
+
+void World::AddGameObject(GameObjectPtr gameObject) {
+  gameObjects.push_back(gameObject);
+  gameObject->SetWorldIndex(static_cast<int>(gameObjects.size()) - 1);
+}

@@ -1,5 +1,7 @@
 #include "Engine.h"
 
+#include <SDL.h>
+
 #define SPDLOG_ACTIVE_LEVEL SPDLOG_LEVEL_TRACE
 
 #include "spdlog/spdlog.h"
@@ -7,6 +9,7 @@
 std::unique_ptr<Engine> Engine::Instance;
 Engine::Engine() {
   World::StaticInit();
+  SDL_Init(SDL_INIT_EVENTS);
   quit = false;
 }
 
@@ -21,7 +24,14 @@ int Engine::Run() {
 
   double secondTimer = 0;
   int frameCount = 0;
+  SDL_Event event;
+  memset(&event, 0, sizeof(SDL_Event));
   while (!quit) {
+    if (SDL_PollEvent(&event)) {
+      if (event.type == SDL_QUIT) {
+        quit = true;
+      }
+    }
     double newTime = Clock::Instance.GetTime();
     double frameTime = newTime - currentTime;
 

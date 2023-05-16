@@ -11,4 +11,11 @@ endif ()
 
 target_link_libraries(Server PRIVATE Common)
 
-
+# See https://github.com/libsdl-org/SDL/issues/6399 for why this exists
+if (WIN32)
+    add_custom_command(
+            TARGET Server POST_BUILD
+            COMMAND "${CMAKE_COMMAND}" -E copy_if_different "$<TARGET_FILE:SDL2::SDL2>" "$<TARGET_FILE_DIR:Server>"
+            VERBATIM
+    )
+endif ()

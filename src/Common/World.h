@@ -9,6 +9,7 @@ class World {
   static void StaticInit();
   static std::unique_ptr<World> Instance;
   void Update();
+  void AddGameObject(GameObjectPtr gameObject);
 
  private:
   World();
