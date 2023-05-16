@@ -9,5 +9,5 @@ else ()
     target_compile_options(Common PRIVATE -Wall -Wextra -pedantic -Wshadow -Wdouble-promotion -Wundef -Wconversion -Werror)
 endif ()
 
-target_link_libraries(Common PRIVATE spdlog)
-target_include_directories(Common PUBLIC ${CMAKE_CURRENT_LIST_DIR})
+target_link_libraries(Common PRIVATE spdlog SDL2)
+target_include_directories(Common PUBLIC ${CMAKE_CURRENT_LIST_DIR} ${sdl2_SOURCE_DIR}/include)

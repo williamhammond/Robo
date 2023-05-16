@@ -2,6 +2,7 @@
 #define ROBO_SERVER_H
 
 #include "../Common/Engine.h"
+#include "GameManager.h"
 
 class Server : public Engine {
  public:
@@ -11,6 +12,7 @@ class Server : public Engine {
 
  private:
   Server();
+  GameManager gameManager;
 };
 
 #endif  // ROBO_SERVER_H

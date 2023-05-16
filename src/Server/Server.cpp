@@ -10,4 +10,6 @@ bool Server::StaticInit() {
   return true;
 }
 
-Server::Server() = default;
+Server::Server() {
+  World::Instance->AddGameObject(GameObjectPtr(new GameManager()));
+}

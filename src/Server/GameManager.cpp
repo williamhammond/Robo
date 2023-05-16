@@ -1,0 +1,17 @@
+#include "GameManager.h"
+
+#include <SDL.h>
+
+void GameManager::WinButton() {
+  SDL_Event quitEvent;
+  quitEvent.type = SDL_QUIT;
+  if (SDL_PushEvent(&quitEvent) < 0) {
+    SDL_Log("Failed to push the quit event: %s", SDL_GetError());
+  }
+}
+
+void GameManager::Update() {
+  WinButton();
+}
+
+GameManager::GameManager() = default;
