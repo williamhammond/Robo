@@ -6,7 +6,7 @@ add_executable(Server ${SOURCE_FILES} ${HEADER_FILES})
 if (MSVC)
     target_compile_options(Server PRIVATE /W4 /WX)
 else ()
-    target_compile_options(Server PRIVATE -Wall -Wextra -pedantic -Wshadow -Wdouble-promotion -Wundef -Wconversion -Werror)
+    target_compile_options(Server PRIVATE -Wall -Wextra -pedantic -Wshadow -Wdouble-promotion -Wundef -Werror)
 endif ()
 
 target_link_libraries(Server PRIVATE Common)
@@ -16,6 +16,11 @@ if (WIN32)
     add_custom_command(
             TARGET Server POST_BUILD
             COMMAND "${CMAKE_COMMAND}" -E copy_if_different "$<TARGET_FILE:SDL2::SDL2>" "$<TARGET_FILE_DIR:Server>"
+            VERBATIM
+    )
+    add_custom_command(
+            TARGET Server POST_BUILD
+            COMMAND "${CMAKE_COMMAND}" -E copy_if_different "$<TARGET_FILE:fmt::fmt>" "$<TARGET_FILE_DIR:Server>"
             VERBATIM
     )
 endif ()
