@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.25)
+cmake_minimum_required(VERSION 3.22)
 
 project(Robo
         VERSION 0.1
@@ -25,7 +25,7 @@ endif ()
 
 include(FetchContent)
 FetchContent_Declare(
-        fmtlib
+        fmt
         GIT_REPOSITORY https://github.com/fmtlib/fmt.git
         GIT_TAG 10.0.0)
 FetchContent_Declare(
@@ -44,7 +44,14 @@ if (NOT sdl2_POPULATED)
     add_subdirectory(${sdl2_SOURCE_DIR} ${sdl2_BINARY_DIR})
 endif ()
 
-FetchContent_MakeAvailable(spdlog fmtlib SDL2)
+if (NOT fmt_POPULATED)
+    FetchContent_Populate(fmt)
+    message(STATUS "Catch source dir: ${fmt_SOURCE_DIR}")
+    message(STATUS "Catch binary dir: ${fmt_BINARY_DIR}")
+    add_subdirectory(${fmt_SOURCE_DIR} ${fmt_BINARY_DIR})
+endif ()
+
+FetchContent_MakeAvailable(spdlog fmt SDL2)
 
 add_subdirectory(src/Common)
 add_subdirectory(src/Server)
