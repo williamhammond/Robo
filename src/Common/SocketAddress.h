@@ -87,12 +87,12 @@ class SocketAddress {
 
 typedef std::shared_ptr<SocketAddress> SocketAddressPtr;
 
-// namespace std {
-// template <>
-// struct hash<SocketAddress> {
-//   size_t operator()(const SocketAddress& inAddress) const {
-//     return inAddress.GetHash();
-//   }
-// };
-// }  // namespace std
+namespace std {
+template <>
+struct hash<SocketAddress> {
+  size_t operator()(const SocketAddress& socketAddress) const {
+    return socketAddress.GetHash();
+  }
+};
+}  // namespace std
 #endif  // ROBO_SOCKETADDRESS_H

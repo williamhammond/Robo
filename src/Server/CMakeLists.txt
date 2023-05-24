@@ -9,7 +9,7 @@ else ()
     target_compile_options(Server PRIVATE -Wall -Wextra -pedantic -Wshadow -Wdouble-promotion -Wundef -Werror)
 endif ()
 
-target_link_libraries(Server PRIVATE Common)
+target_link_libraries(Server PRIVATE Common spdlog)
 
 # See https://github.com/libsdl-org/SDL/issues/6399 for why this exists
 if (WIN32)

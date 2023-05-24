@@ -45,7 +45,7 @@ class NetworkManager {
   }
 
  protected:
-  IntToGameObjectMap mNetworkIdToGameObjectMap;
+  IntToGameObjectMap NetworkIdToGameObject;
 
  private:
   class ReceivedPacket {
