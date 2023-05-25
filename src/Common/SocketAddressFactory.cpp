@@ -2,6 +2,10 @@
 
 #include "SocketUtil.h"
 
+#if !defined(_WIN32)
+#include <netdb.h>
+#endif
+
 SocketAddressPtr SocketAddressFactory::CreateIPv4FromString(const std::string& destination) {
   auto pos = destination.find_last_of(':');
   std::string host, port;
