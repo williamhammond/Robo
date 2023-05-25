@@ -8,9 +8,17 @@
 #include <fcntl.h>
 #include <sys/socket.h>
 #include <unistd.h>
+#else
+// Include order matters because windows
+// clang-format off
+typedef int socklen_t;
+#include <winsock2.h>
+#include <windows.h>
+
+// clang-format on
 #endif
 
-int UDPSocket::Bind(const SocketAddress& toAddress) const {
+int UDPSocket::Bind([[maybe_unused]] const SocketAddress& toAddress) const {
   int error = bind(mSocket, &toAddress.sockAddr, static_cast<int>(toAddress.GetSize()));
   if (error != 0) {
     SocketUtil::ReportError("UDPSocket::Bind");

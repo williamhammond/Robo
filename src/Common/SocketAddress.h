@@ -2,7 +2,12 @@
 #define ROBO_SOCKETADDRESS_H
 
 #if defined(_WIN32)
+// Include order matters because windows
+// clang-format off
+typedef int socklen_t;
+#include <winsock2.h>
 #include <ws2tcpip.h>
+// clang-format on
 #else
 #include <errno.h>
 #include <netinet/in.h>

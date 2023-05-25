@@ -9,7 +9,15 @@ else ()
     target_compile_options(Server PRIVATE -Wall -Wextra -pedantic -Wshadow -Wdouble-promotion -Wundef -Werror)
 endif ()
 
-target_link_libraries(Server PRIVATE Common spdlog)
+set(platform_dependent_libs "")
+if (WIN32)
+    if (MSVC)
+        list(APPEND platform_dependent_libs "ws2_32")
+    else ()
+        list(APPEND platform_dependent_libs "-lws2_32")
+    endif ()
+endif ()
+target_link_libraries(Server PRIVATE Common spdlog ${platform_dependent_libs})
 
 # See https://github.com/libsdl-org/SDL/issues/6399 for why this exists
 if (WIN32)

@@ -2,6 +2,8 @@
 
 #include <SDL.h>
 
+#include "SocketUtil.h"
+
 #define SPDLOG_ACTIVE_LEVEL SPDLOG_LEVEL_INFO
 
 #include "spdlog/spdlog.h"
@@ -9,11 +11,14 @@
 std::unique_ptr<Engine> Engine::Instance;
 Engine::Engine() {
   World::StaticInit();
+  SocketUtil::StaticInit();
   SDL_Init(SDL_INIT_EVENTS);
   quit = false;
 }
 
-Engine::~Engine() = default;
+Engine::~Engine() {
+  SocketUtil::CleanUp();
+}
 
 int Engine::Run() {
   spdlog::set_level(spdlog::level::trace);
