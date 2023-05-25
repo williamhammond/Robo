@@ -7,7 +7,7 @@
 
 NetworkManager::NetworkManager() : bytesSentThisFrame(0), packetDropChance(0.f), simulatedLatency(0.f) {}
 
-NetworkManager::~NetworkManager() {}
+NetworkManager::~NetworkManager() = default;
 
 bool NetworkManager::Init(uint16_t inPort) {
   udpSocket = SocketUtil::CreateUDPSocket(INET);

@@ -2,7 +2,12 @@
 #define ROBO_SOCKETADDRESS_H
 
 #if defined(_WIN32)
+// Include order matters because windows
+// clang-format off
+typedef int socklen_t;
+#include <winsock2.h>
 #include <ws2tcpip.h>
+// clang-format on
 #else
 #include <errno.h>
 #include <netinet/in.h>
@@ -87,12 +92,12 @@ class SocketAddress {
 
 typedef std::shared_ptr<SocketAddress> SocketAddressPtr;
 
-// namespace std {
-// template <>
-// struct hash<SocketAddress> {
-//   size_t operator()(const SocketAddress& inAddress) const {
-//     return inAddress.GetHash();
-//   }
-// };
-// }  // namespace std
+namespace std {
+template <>
+struct hash<SocketAddress> {
+  size_t operator()(const SocketAddress& socketAddress) const {
+    return socketAddress.GetHash();
+  }
+};
+}  // namespace std
 #endif  // ROBO_SOCKETADDRESS_H
