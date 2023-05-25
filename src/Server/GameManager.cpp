@@ -10,8 +10,4 @@ void GameManager::WinButton() {
   }
 }
 
-void GameManager::Update() {
-  WinButton();
-}
-
 GameManager::GameManager() = default;

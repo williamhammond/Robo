@@ -38,6 +38,9 @@ void ServerNetworkManager::ProcessPacket(const ClientProxyPtr& clientProxy, Inpu
     case PacketType::HelloPacketId:
       SendWelcomePacket(clientProxy);
       break;
+    case PacketType::WinPacketId:
+      HandleWinPacket(clientProxy);
+      break;
     default:
       spdlog::error("Unknown packet type received from {}", clientProxy->GetSocketAddress().ToString().c_str());
       break;
@@ -73,6 +76,10 @@ void ServerNetworkManager::SendWelcomePacket(const ClientProxyPtr& clientProxy) 
   spdlog::info("Client '{}' connected as player {}", clientProxy->GetName().c_str(), clientProxy->GetPlayerId());
 
   SendPacket(welcomePacket, clientProxy->GetSocketAddress());
+}
+
+void ServerNetworkManager::HandleWinPacket([[maybe_unused]] const ClientProxyPtr& clientProxy) {
+  GameManager::WinButton();
 }
 
 void ServerNetworkManager::SendOutgoingPackets() {}
