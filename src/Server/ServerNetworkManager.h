@@ -20,6 +20,7 @@ class ServerNetworkManager : public NetworkManager {
   void HandlePacketFromNewClient(InputMemoryBitStream& inputStream, const SocketAddress& fromAddress);
   void ProcessPacket(const ClientProxyPtr& clientProxy, InputMemoryBitStream& inputStream);
   void SendWelcomePacket(const ClientProxyPtr& clientProxy);
+  static void HandleWinPacket(const ClientProxyPtr& clientProxy);
 
   std::unordered_map<int, ClientProxyPtr> playerIdToClient;
   std::unordered_map<SocketAddress, ClientProxyPtr> addressToClient;

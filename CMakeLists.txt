@@ -55,6 +55,7 @@ FetchContent_MakeAvailable(spdlog fmt SDL2)
 
 add_subdirectory(src/Common)
 add_subdirectory(src/Server)
+add_subdirectory(src/Client)
 
 set(CMAKE_INSTALL_PREFIX "./build/install")
 if (UNIX)
@@ -72,10 +73,10 @@ else ()
             link_libraries(ws2_32 -lws2_32)
         endif ()
     else ()
-        message(FATAL_ERROR " System not UNIX nor WIN32 - not implemented yet ")
+        message(FATAL_ERROR "System not UNIX nor WIN32 - not implemented yet")
     endif ()
 endif ()
-install(TARGETS Server Common
+install(TARGETS Server Client Common
         RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
         LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
         ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
