@@ -1,9 +1,9 @@
 #ifndef ROBO_CLIENTPROXY_H
 #define ROBO_CLIENTPROXY_H
 
-#include <SocketAddress.h>
-
 #include <memory>
+
+#include "SocketAddress.h"
 
 class ClientProxy {
  public:
