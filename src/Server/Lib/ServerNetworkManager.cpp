@@ -1,13 +1,12 @@
 #include "ServerNetworkManager.h"
 
-#include <spdlog/spdlog.h>
-
 #include <algorithm>
 #include <memory>
 
 #include "NetworkIds.h"
 #include "NetworkManager.h"
 #include "Server.h"
+#include "spdlog/spdlog.h"
 
 ServerNetworkManager* ServerNetworkManager::Instance;
 

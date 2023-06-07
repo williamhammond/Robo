@@ -1,12 +1,11 @@
-file(GLOB_RECURSE SOURCE_FILES *.cpp)
-file(GLOB_RECURSE HEADER_FILES *.h)
-
-add_executable(Server ${SOURCE_FILES} ${HEADER_FILES})
+file(GLOB_RECURSE SOURCE_FILES Lib/*.cpp)
+file(GLOB_RECURSE HEADER_FILES Lib/*.h)
+add_library(SrvLib ${SOURCE_FILES} ${HEADER_FILES})
 
 if (MSVC)
-    target_compile_options(Server PRIVATE /W4 /WX)
+    target_compile_options(SrvLib PRIVATE /W4 /WX)
 else ()
-    target_compile_options(Server PRIVATE -Wall -Wextra -pedantic -Wshadow -Wdouble-promotion -Wundef -Werror)
+    target_compile_options(SrvLib PRIVATE -Wall -Wextra -pedantic -Wshadow -Wdouble-promotion -Wundef -Werror)
 endif ()
 
 set(platform_dependent_libs "")
@@ -17,7 +16,28 @@ if (WIN32)
         list(APPEND platform_dependent_libs "-lws2_32")
     endif ()
 endif ()
-target_link_libraries(Server PRIVATE Common spdlog ${platform_dependent_libs})
+target_link_libraries(SrvLib PUBLIC Common spdlog ${platform_dependent_libs})
+# See https://github.com/libsdl-org/SDL/issues/6399 for why this exists
+if (WIN32)
+    add_custom_command(
+            TARGET SrvLib POST_BUILD
+            COMMAND "${CMAKE_COMMAND}" -E copy_if_different "$<TARGET_FILE:SDL2::SDL2>" "$<TARGET_FILE_DIR:SrvLib>"
+            VERBATIM
+    )
+    add_custom_command(
+            TARGET SrvLib POST_BUILD
+            COMMAND "${CMAKE_COMMAND}" -E copy_if_different "$<TARGET_FILE:fmt::fmt>" "$<TARGET_FILE_DIR:SrvLib>"
+            VERBATIM
+    )
+endif ()
+
+add_executable(Server ServerMain.cpp)
+target_link_libraries(Server PRIVATE SrvLib)
+if (MSVC)
+    target_compile_options(Server PRIVATE /W4 /WX)
+else ()
+    target_compile_options(Server PRIVATE -Wall -Wextra -pedantic -Wshadow -Wdouble-promotion -Wundef -Werror)
+endif ()
 
 # See https://github.com/libsdl-org/SDL/issues/6399 for why this exists
 if (WIN32)

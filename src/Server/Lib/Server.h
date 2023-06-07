@@ -1,8 +1,8 @@
 #ifndef ROBO_SERVER_H
 #define ROBO_SERVER_H
 
-#include "../Common/Engine.h"
 #include "ClientProxy.h"
+#include "Engine.h"
 #include "GameManager.h"
 
 class Server : public Engine {

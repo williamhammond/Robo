@@ -17,6 +17,11 @@ if (CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
     # Ensure -std=c++xx instead of -std=g++xx
     set(CMAKE_CXX_EXTENSIONS OFF)
 
+    # https://cmake.org/cmake/help/latest/policy/CMP0135.html
+    if (CMAKE_VERSION VERSION_GREATER_EQUAL "3.24.0")
+        cmake_policy(SET CMP0135 NEW)
+    endif ()
+
     # Support folders in IDEs
     set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
