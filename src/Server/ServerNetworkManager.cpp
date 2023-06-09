@@ -7,6 +7,7 @@
 
 #include "NetworkIds.h"
 #include "NetworkManager.h"
+#include "SDL.h"
 #include "Server.h"
 
 ServerNetworkManager* ServerNetworkManager::Instance;
@@ -79,9 +80,24 @@ void ServerNetworkManager::SendWelcomePacket(const ClientProxyPtr& clientProxy) 
 }
 
 void ServerNetworkManager::HandleWinPacket([[maybe_unused]] const ClientProxyPtr& clientProxy) {
-  GameManager::WinButton();
+  // TODO put this in it's own class
+  SDL_Event quitEvent;
+  quitEvent.type = SDL_QUIT;
+  if (SDL_PushEvent(&quitEvent) < 0) {
+    SDL_Log("Failed to Push the quit event: %s", SDL_GetError());
+  }
 }
 
-void ServerNetworkManager::SendOutgoingPackets() {}
+void ServerNetworkManager::SendOutgoingPackets() {
+  for (auto& it : addressToClient) {
+    ClientProxyPtr clientProxy = it.second;
+    clientProxy->GetDeliveryNotificationManager().ProcessTimedOutPackets();
+    if (clientProxy->IsLastMoveTimestampDirty()) {
+      SendStatePacketToClient(clientProxy);
+    }
+  }
+}
+
+void ServerNetworkManager::SendStatePacketToClient([[maybe_unused]] ClientProxyPtr inClientProxy) {}
 
 void ServerNetworkManager::CheckForDisconnects() {}

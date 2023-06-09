@@ -5,6 +5,8 @@
 
 #include <memory>
 
+#include "DeliveryNotificationManager.h"
+
 class ClientProxy {
  public:
   ClientProxy(const SocketAddress& inSocketAddress, const std::string& inName, int inPlayerId);
@@ -30,12 +32,17 @@ class ClientProxy {
     return isLastMoveTimestampDirty;
   }
 
+  DeliveryNotificationManager& GetDeliveryNotificationManager() {
+    return deliveryNotificationManager;
+  }
+
  private:
   int playerId;
   std::string name;
   SocketAddress socketAddress;
   float lastPacketTime;
-  bool isLastMoveTimestampDirty;
+  bool isLastMoveTimestampDirty{};
+  DeliveryNotificationManager deliveryNotificationManager;
 };
 typedef std::shared_ptr<ClientProxy> ClientProxyPtr;
 
