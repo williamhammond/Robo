@@ -2,13 +2,14 @@
 #define ROBO_CLIENT_H
 
 #include <Engine.h>
-#include <SDL_events.h>
+
 class Client : public Engine {
  public:
   static bool StaticInit();
 
  protected:
   Client();
+  double sendWin;
 
   void Update() override;
 };

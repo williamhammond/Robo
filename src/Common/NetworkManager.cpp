@@ -105,3 +105,12 @@ void NetworkManager::UpdateBytesSentLastFrame() {
 NetworkManager::ReceivedPacket::ReceivedPacket(float inReceivedTime, InputMemoryBitStream& ioInputMemoryBitStream,
                                                const SocketAddress& inFromAddress)
     : receivedTime(inReceivedTime), packetBuffer(ioInputMemoryBitStream), fromAddress(inFromAddress) {}
+
+GameObjectPtr NetworkManager::GetGameObject(uint32_t networkId) const {
+  auto gameObjectIt = networkIdToGameObject.find(networkId);
+  if (gameObjectIt != networkIdToGameObject.end()) {
+    return gameObjectIt->second;
+  }
+
+  return {};
+}

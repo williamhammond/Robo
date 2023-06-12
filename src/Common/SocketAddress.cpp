@@ -11,7 +11,6 @@ std::string SocketAddress::ToString() const {
   InetNtop(s->sin_family, const_cast<in_addr*>(&s->sin_addr), destinationBuffer, sizeof(destinationBuffer));
   return fmt::format("{}:{}", destinationBuffer, ntohs(s->sin_port));
 #else
-  // not implement on mac for now...
-  return {"not implemented on mac for now"};
+  return {"not implemented on unix for now"};
 #endif
 }

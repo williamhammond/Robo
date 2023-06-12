@@ -7,6 +7,8 @@
 
 #include "NetworkIds.h"
 #include "NetworkManager.h"
+#include "ReplicationManagerTransmissionData.h"
+#include "SDL.h"
 #include "Server.h"
 
 ServerNetworkManager* ServerNetworkManager::Instance;
@@ -79,9 +81,36 @@ void ServerNetworkManager::SendWelcomePacket(const ClientProxyPtr& clientProxy) 
 }
 
 void ServerNetworkManager::HandleWinPacket([[maybe_unused]] const ClientProxyPtr& clientProxy) {
-  GameManager::WinButton();
+  OutputMemoryBitStream gameOverPacket;
+  gameOverPacket.Write(PacketType::WinPacketId);
+  gameOverPacket.Write(clientProxy->GetPlayerId());
+  for (auto& it : playerIdToClient) {
+    SendPacket(gameOverPacket, it.second->GetSocketAddress());
+  }
 }
 
-void ServerNetworkManager::SendOutgoingPackets() {}
+void ServerNetworkManager::SendOutgoingPackets() {
+  for (auto& it : addressToClient) {
+    ClientProxyPtr clientProxy = it.second;
+    clientProxy->GetDeliveryNotificationManager().ProcessTimedOutPackets();
+    if (clientProxy->IsLastMoveTimestampDirty()) {
+      SendStatePacketToClient(clientProxy);
+    }
+  }
+}
+
+void ServerNetworkManager::SendStatePacketToClient([[maybe_unused]] const ClientProxyPtr& clientProxy) {
+  OutputMemoryBitStream statePacket;
+  statePacket.Write(PacketType::StatePacketId);
+
+  InFlightPacket* inFlightPacket = clientProxy->GetDeliveryNotificationManager().WriteState(statePacket);
+
+  auto* transmissionData = new ReplicationManagerTransmissionData(&clientProxy->GetReplicationManagerServer());
+  clientProxy->GetReplicationManagerServer().Write(statePacket, transmissionData);
+  // TODO fix key
+  inFlightPacket->SetTransmissionData(0, TransmissionDataPtr(transmissionData));
+
+  SendPacket(statePacket, clientProxy->GetSocketAddress());
+}
 
 void ServerNetworkManager::CheckForDisconnects() {}

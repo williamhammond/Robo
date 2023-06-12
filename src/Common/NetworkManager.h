@@ -2,6 +2,7 @@
 #define ROBO_NETWORKMANAGER_H
 
 #include <list>
+#include <map>
 #include <queue>
 #include <unordered_map>
 
@@ -44,6 +45,8 @@ class NetworkManager {
     simulatedLatency = inLatency;
   }
 
+  GameObjectPtr GetGameObject(uint32_t networkId) const;
+
  protected:
   IntToGameObjectMap NetworkIdToGameObject;
 
@@ -75,6 +78,8 @@ class NetworkManager {
   void ProcessQueuedPackets();
 
   std::queue<ReceivedPacket, std::list<ReceivedPacket>> packetQueue;
+
+  std::map<uint32_t, GameObjectPtr> networkIdToGameObject;
 
   UDPSocketPtr udpSocket;
 

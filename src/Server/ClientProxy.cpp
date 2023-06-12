@@ -2,7 +2,8 @@
 
 #include <Clock.h>
 
-ClientProxy::ClientProxy(const SocketAddress& inSocketAddress, const std::string& inName, int inPlayerId) {
+ClientProxy::ClientProxy(const SocketAddress& inSocketAddress, const std::string& inName, int inPlayerId)
+    : deliveryNotificationManager(false, true) {
   playerId = inPlayerId;
   socketAddress = inSocketAddress;
   name = inName;

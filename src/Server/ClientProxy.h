@@ -5,6 +5,9 @@
 
 #include <memory>
 
+#include "DeliveryNotificationManager.h"
+#include "ReplicationManagerServer.h"
+
 class ClientProxy {
  public:
   ClientProxy(const SocketAddress& inSocketAddress, const std::string& inName, int inPlayerId);
@@ -30,12 +33,22 @@ class ClientProxy {
     return isLastMoveTimestampDirty;
   }
 
+  DeliveryNotificationManager& GetDeliveryNotificationManager() {
+    return deliveryNotificationManager;
+  }
+
+  ReplicationManagerServer& GetReplicationManagerServer() {
+    return replicationManagerServer;
+  }
+
  private:
   int playerId;
   std::string name;
   SocketAddress socketAddress;
   float lastPacketTime;
-  bool isLastMoveTimestampDirty;
+  ReplicationManagerServer replicationManagerServer;
+  bool isLastMoveTimestampDirty{};
+  DeliveryNotificationManager deliveryNotificationManager;
 };
 typedef std::shared_ptr<ClientProxy> ClientProxyPtr;
 
