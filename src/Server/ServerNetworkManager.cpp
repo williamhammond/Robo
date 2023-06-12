@@ -81,11 +81,11 @@ void ServerNetworkManager::SendWelcomePacket(const ClientProxyPtr& clientProxy) 
 }
 
 void ServerNetworkManager::HandleWinPacket([[maybe_unused]] const ClientProxyPtr& clientProxy) {
-  // TODO put this in it's own class
-  SDL_Event quitEvent;
-  quitEvent.type = SDL_QUIT;
-  if (SDL_PushEvent(&quitEvent) < 0) {
-    SDL_Log("Failed to Push the quit event: %s", SDL_GetError());
+  OutputMemoryBitStream gameOverPacket;
+  gameOverPacket.Write(PacketType::WinPacketId);
+  gameOverPacket.Write(clientProxy->GetPlayerId());
+  for (auto& it : playerIdToClient) {
+    SendPacket(gameOverPacket, it.second->GetSocketAddress());
   }
 }
 

@@ -2,6 +2,7 @@
 
 #include <spdlog/spdlog.h>
 
+#include "Client.h"
 #include "NetworkIds.h"
 
 ClientNetworkManager* ClientNetworkManager::Instance;
@@ -41,6 +42,7 @@ void ClientNetworkManager::ProcessPacket(InputMemoryBitStream& inputStream,
       break;
     case PacketType::WinPacketId:
       HandleGameOverPacket(inputStream);
+      Client::Instance->SetQuit(true);
       break;
     case PacketType::HelloPacketId:
     case PacketType::StatePacketId:
@@ -62,6 +64,7 @@ void ClientNetworkManager::SendWinPacket() {
   winPacket.Write(PacketType::WinPacketId);
   winPacket.Write(playerId);
 
+  spdlog::info("Sending win packet");
   SendPacket(winPacket, serverAddress);
 }
 
