@@ -14,6 +14,7 @@ class ClientNetworkManager : public NetworkManager {
 
   void SendOutgoingPackets();
   void ProcessPacket(InputMemoryBitStream& inputStream, const SocketAddress& fromAddress) override;
+  void SendWinPacket();
 
   [[nodiscard]] int GetPlayerId() const {
     return playerId;
@@ -25,8 +26,8 @@ class ClientNetworkManager : public NetworkManager {
 
   void UpdateSayingHello();
   void SendHelloPacket();
-  void SendWinPacket();
 
+  void HandleGameOverPacket(InputMemoryBitStream& inputStream) const;
   void HandleWelcomePacket(InputMemoryBitStream& inputStream);
 
   NetworkClientState state;

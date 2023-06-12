@@ -10,8 +10,8 @@ using std::shared_ptr;
 class GameObject {
  public:
   GameObject();
+  virtual ~GameObject() = default;
 
-  virtual ~GameObject() {}
   virtual void Update();
 
   void SetWorldIndex(int i) {
@@ -22,14 +22,14 @@ class GameObject {
     return worldIndex;
   }
 
-  virtual uint32_t Write(OutputMemoryBitStream& inOutputStream, uint32_t inDirtyState) const {
-    (void)inOutputStream;
-    (void)inDirtyState;
+  virtual uint32_t Write(OutputMemoryBitStream& outputStream, uint32_t dirtyState) const {
+    (void)outputStream;
+    (void)dirtyState;
     return 0;
   }
 
-  virtual void Read(InputMemoryBitStream& inInputStream) {
-    (void)inInputStream;
+  virtual void Read(InputMemoryBitStream& inputStream) {
+    (void)inputStream;
   }
 
   [[nodiscard]] virtual uint32_t GetClassId() const {

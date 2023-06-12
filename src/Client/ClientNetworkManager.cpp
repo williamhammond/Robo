@@ -19,14 +19,13 @@ void ClientNetworkManager::Init(const SocketAddress& inServerAddress, const std:
 }
 
 ClientNetworkManager::ClientNetworkManager() : state(NCS_Uninitialized), playerId(-1) {}
+
 void ClientNetworkManager::SendOutgoingPackets() {
   switch (state) {
     case NCS_SayingHello:
       SendHelloPacket();
       break;
     case NCS_Welcomed:
-      SendWinPacket();
-      break;
     case NCS_Uninitialized:
       break;
   }
@@ -40,23 +39,14 @@ void ClientNetworkManager::ProcessPacket(InputMemoryBitStream& inputStream,
     case PacketType::WelcomePacketId:
       HandleWelcomePacket(inputStream);
       break;
-    case PacketType::HelloPacketId:
     case PacketType::WinPacketId:
+      HandleGameOverPacket(inputStream);
+      break;
+    case PacketType::HelloPacketId:
     case PacketType::StatePacketId:
       break;
   }
 }
-
-void ClientNetworkManager::HandleWelcomePacket(InputMemoryBitStream& inputStream) {
-  if (state == NCS_SayingHello) {
-    inputStream.Read(playerId);
-    state = NCS_Welcomed;
-    spdlog::info("'{}' was welcomed on client as player {}", name.c_str(), playerId);
-  }
-}
-
-void ClientNetworkManager::UpdateSayingHello() {}
-
 void ClientNetworkManager::SendHelloPacket() {
   OutputMemoryBitStream helloPacket;
 
@@ -70,7 +60,27 @@ void ClientNetworkManager::SendWinPacket() {
   OutputMemoryBitStream winPacket;
 
   winPacket.Write(PacketType::WinPacketId);
-  winPacket.Write(name);
+  winPacket.Write(playerId);
 
   SendPacket(winPacket, serverAddress);
+}
+
+void ClientNetworkManager::UpdateSayingHello() {}
+
+void ClientNetworkManager::HandleWelcomePacket(InputMemoryBitStream& inputStream) {
+  if (state == NCS_SayingHello) {
+    inputStream.Read(playerId);
+    state = NCS_Welcomed;
+    spdlog::info("'{}' was welcomed on client as player {}", name.c_str(), playerId);
+  }
+}
+
+void ClientNetworkManager::HandleGameOverPacket(InputMemoryBitStream& inputStream) const {
+  int winnerId;
+  inputStream.Read(winnerId);
+  if (winnerId == playerId) {
+    spdlog::info("You won!");
+  } else {
+    spdlog::info("You lost! '{}' won!", winnerId);
+  }
 }

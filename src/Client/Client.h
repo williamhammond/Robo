@@ -9,6 +9,7 @@ class Client : public Engine {
 
  protected:
   Client();
+  double sendWin;
 
   void Update() override;
 };
