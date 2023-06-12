@@ -42,6 +42,7 @@ void ClientNetworkManager::ProcessPacket(InputMemoryBitStream& inputStream,
       break;
     case PacketType::HelloPacketId:
     case PacketType::WinPacketId:
+    case PacketType::StatePacketId:
       break;
   }
 }

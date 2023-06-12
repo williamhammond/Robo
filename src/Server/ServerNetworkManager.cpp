@@ -7,6 +7,7 @@
 
 #include "NetworkIds.h"
 #include "NetworkManager.h"
+#include "ReplicationManagerTransmissionData.h"
 #include "SDL.h"
 #include "Server.h"
 
@@ -98,6 +99,18 @@ void ServerNetworkManager::SendOutgoingPackets() {
   }
 }
 
-void ServerNetworkManager::SendStatePacketToClient([[maybe_unused]] ClientProxyPtr inClientProxy) {}
+void ServerNetworkManager::SendStatePacketToClient([[maybe_unused]] const ClientProxyPtr& clientProxy) {
+  OutputMemoryBitStream statePacket;
+  statePacket.Write(PacketType::StatePacketId);
+
+  InFlightPacket* inFlightPacket = clientProxy->GetDeliveryNotificationManager().WriteState(statePacket);
+
+  auto* transmissionData = new ReplicationManagerTransmissionData(&clientProxy->GetReplicationManagerServer());
+  clientProxy->GetReplicationManagerServer().Write(statePacket, transmissionData);
+  // TODO fix key
+  inFlightPacket->SetTransmissionData(0, TransmissionDataPtr(transmissionData));
+
+  SendPacket(statePacket, clientProxy->GetSocketAddress());
+}
 
 void ServerNetworkManager::CheckForDisconnects() {}
