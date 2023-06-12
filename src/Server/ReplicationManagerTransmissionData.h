@@ -11,6 +11,7 @@ class ReplicationManagerServer;
 
 class ReplicationManagerTransmissionData : public TransmissionData {
  public:
+  virtual ~ReplicationManagerTransmissionData() = default;
   explicit ReplicationManagerTransmissionData(ReplicationManagerServer* inReplicationManagerServer)
       : replicationManagerServer(inReplicationManagerServer) {}
 
