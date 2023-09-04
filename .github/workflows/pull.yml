@@ -100,4 +100,4 @@ jobs:
       - name: Unit tests
         working-directory: build
         run: |
-          ctest -C ${{ matrix.config.build_type }} --output-on-failure --verbose -L unit
+          ctest -C ${{ matrix.config.build_type }} --test-dir build/ --output-on-failure --verbose -L unit
