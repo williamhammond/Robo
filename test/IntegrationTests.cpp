@@ -1,5 +1,8 @@
 #include <gtest/gtest.h>
 
+#include <mutex>
+#include <thread>
+
 #include "Server.h"
 
 class IntegrationTests : public ::testing::Test {
