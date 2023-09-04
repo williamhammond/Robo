@@ -55,6 +55,7 @@ FetchContent_MakeAvailable(spdlog fmt SDL2)
 
 add_subdirectory(src/Common)
 add_subdirectory(src/Server)
+add_subdirectory(src/Server/Lib)
 add_subdirectory(src/Client)
 
 enable_testing()

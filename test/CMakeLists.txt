@@ -12,10 +12,36 @@ add_executable(
         integration_tests
         IntegrationTests.cpp
 )
+
+if (WIN32)
+    add_custom_command(
+            TARGET integration_tests POST_BUILD
+            COMMAND "${CMAKE_COMMAND}" -E copy_if_different "$<TARGET_FILE:SDL2::SDL2>" "$<TARGET_FILE_DIR:integration_tests>"
+            VERBATIM
+    )
+    add_custom_command(
+            TARGET integration_tests POST_BUILD
+            COMMAND "${CMAKE_COMMAND}" -E copy_if_different "$<TARGET_FILE:fmt::fmt>" "$<TARGET_FILE_DIR:integration_tests>"
+            VERBATIM
+    )
+    add_custom_command(
+            TARGET integration_tests POST_BUILD
+            COMMAND "${CMAKE_COMMAND}" -E copy_if_different "$<TARGET_FILE:ServerLib>" "$<TARGET_FILE_DIR:integration_tests>"
+            VERBATIM
+    )
+    add_custom_command(
+            TARGET integration_tests POST_BUILD
+            COMMAND "${CMAKE_COMMAND}" -E copy_if_different "$<TARGET_FILE:Common>" "$<TARGET_FILE_DIR:integration_tests>"
+            VERBATIM
+    )
+
+endif ()
 target_link_libraries(
         integration_tests
+        PRIVATE
         GTest::gtest_main
         GTest::gtest
+        ServerLib
 )
 
 if (MSVC)
