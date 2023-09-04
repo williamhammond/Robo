@@ -1,7 +1,5 @@
 #include "ServerNetworkManager.h"
 
-#include <spdlog/spdlog.h>
-
 #include <algorithm>
 #include <memory>
 
@@ -10,6 +8,7 @@
 #include "ReplicationManagerTransmissionData.h"
 #include "SDL.h"
 #include "Server.h"
+#include "spdlog/spdlog.h"
 
 ServerNetworkManager* ServerNetworkManager::Instance;
 

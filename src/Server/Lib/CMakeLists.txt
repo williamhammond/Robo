@@ -1,0 +1,21 @@
+file(GLOB_RECURSE SOURCE_FILES *.cpp)
+file(GLOB_RECURSE HEADER_FILES *.h)
+
+add_library(ServerLib ${SOURCE_FILES} ${HEADER_FILES})
+
+if (MSVC)
+    target_compile_options(ServerLib PRIVATE /W4 /WX)
+else ()
+    target_compile_options(ServerLib PRIVATE -Wall -Wextra -pedantic -Wshadow -Wdouble-promotion -Wundef -Werror)
+endif ()
+
+set(platform_dependent_libs "")
+if (WIN32)
+    if (MSVC)
+        list(APPEND platform_dependent_libs "ws2_32")
+    else ()
+        list(APPEND platform_dependent_libs "-lws2_32")
+    endif ()
+endif ()
+target_link_libraries(ServerLib PUBLIC Common spdlog ${platform_dependent_libs})
+target_include_directories(ServerLib PUBLIC ${CMAKE_CURRENT_LIST_DIR})

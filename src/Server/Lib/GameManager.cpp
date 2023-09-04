@@ -1,6 +1,6 @@
 #include "GameManager.h"
 
-#include <SDL.h>
+#include "SDL.h"
 
 void GameManager::WinButton() {
   SDL_Event quitEvent;

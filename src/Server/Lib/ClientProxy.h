@@ -1,12 +1,11 @@
 #ifndef ROBO_CLIENTPROXY_H
 #define ROBO_CLIENTPROXY_H
 
-#include <SocketAddress.h>
-
 #include <memory>
 
 #include "DeliveryNotificationManager.h"
 #include "ReplicationManagerServer.h"
+#include "SocketAddress.h"
 
 class ClientProxy {
  public:
