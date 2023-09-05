@@ -1,23 +1,26 @@
 #include <gtest/gtest.h>
 
+#include <atomic>
 #include <mutex>
 #include <thread>
 
 #include "Server.h"
+#include "spdlog/spdlog.h"
 
 class IntegrationTests : public ::testing::Test {
  protected:
   void SetUp() override {
     Server::StaticInit();
     serverThread = std::thread([this]() {
-      serverInitializationCV.notify_one();
       serverReady = true;
       // TODO @WilliamHammond Probably a race condition. We need to add something like an IsReady flag
       // to the engine
       Server::Instance->Run();
     });
-    std::unique_lock<std::mutex> lock(mutex);
-    serverInitializationCV.wait(lock, [this]() { return serverReady; });
+    while (!serverReady) {
+      std::this_thread::yield();
+    }
+    SPDLOG_INFO("Integration test fixture ready");
   }
 
   void TearDown() override {
@@ -25,12 +28,11 @@ class IntegrationTests : public ::testing::Test {
     if (serverThread.joinable()) {
       serverThread.join();
     }
+    SPDLOG_INFO("Integration test fixture cleaned up");
   }
 
-  std::condition_variable serverInitializationCV;
-  std::mutex mutex;
   std::thread serverThread;
-  bool serverReady = false;
+  std::atomic<bool> serverReady = false;
 };
 
 TEST_F(IntegrationTests, BasicAssertions) {

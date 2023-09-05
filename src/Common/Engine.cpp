@@ -22,7 +22,7 @@ Engine::~Engine() {
 
 int Engine::Run() {
   spdlog::set_level(spdlog::level::trace);
-  SPDLOG_TRACE("Engine::Run");
+  SPDLOG_INFO("Starting engine");
   const double dt = 0.01;
   double currentTime = Clock::Instance.GetTime();
   double accumulator = 0.0;

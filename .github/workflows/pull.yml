@@ -97,7 +97,7 @@ jobs:
         run: |
           cmake --build build --config ${{ matrix.config.build_type }}
 
-      - name: Unit tests
+      - name: Run Tests
         working-directory: build
         run: |
-          ctest -C ${{ matrix.config.build_type }} --test-dir build/ --output-on-failure --verbose -L unit
+          ctest -C ${{ matrix.config.build_type }} --test-dir test --output-on-failure --verbose

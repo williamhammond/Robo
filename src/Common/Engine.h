@@ -4,6 +4,7 @@
 
 #include "Clock.h"
 #include "World.h"
+#include "spdlog/spdlog.h"
 
 class Engine {
  public:
@@ -13,6 +14,7 @@ class Engine {
   virtual int Run();
 
   void SetQuit(bool shouldQuit) {
+    SPDLOG_INFO("Engine shutting down");
     quit = shouldQuit;
   }
 
