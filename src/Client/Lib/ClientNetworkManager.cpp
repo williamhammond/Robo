@@ -1,9 +1,8 @@
 #include "ClientNetworkManager.h"
 
-#include <spdlog/spdlog.h>
-
 #include "Client.h"
 #include "NetworkIds.h"
+#include "spdlog/spdlog.h"
 
 ClientNetworkManager* ClientNetworkManager::Instance;
 

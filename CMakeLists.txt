@@ -57,6 +57,7 @@ add_subdirectory(src/Common)
 add_subdirectory(src/Server)
 add_subdirectory(src/Server/Lib)
 add_subdirectory(src/Client)
+add_subdirectory(src/Client/Lib)
 
 enable_testing()
 add_subdirectory(test)

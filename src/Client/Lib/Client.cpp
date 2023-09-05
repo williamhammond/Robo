@@ -1,9 +1,8 @@
 #include "Client.h"
 
-#include <SocketAddressFactory.h>
-
 #include "ClientNetworkManager.h"
 #include "RoboMath.h"
+#include "SocketAddressFactory.h"
 
 bool Client::StaticInit() {
   auto* client = new Client();
