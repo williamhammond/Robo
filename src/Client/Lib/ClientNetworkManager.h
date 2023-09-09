@@ -1,8 +1,8 @@
 #ifndef ROBO_CLIENTNETWORKMANAGER_H
 #define ROBO_CLIENTNETWORKMANAGER_H
 
-#include <NetworkManager.h>
-#include <SocketAddress.h>
+#include "NetworkManager.h"
+#include "SocketAddress.h"
 
 class ClientNetworkManager : public NetworkManager {
   enum NetworkClientState { NCS_Uninitialized, NCS_SayingHello, NCS_Welcomed };
@@ -24,7 +24,6 @@ class ClientNetworkManager : public NetworkManager {
   ClientNetworkManager();
   void Init(const SocketAddress& serverAddress, const std::string& name);
 
-  void UpdateSayingHello();
   void SendHelloPacket();
 
   void HandleGameOverPacket(InputMemoryBitStream& inputStream) const;
