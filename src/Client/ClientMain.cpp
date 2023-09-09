@@ -1,6 +1,6 @@
 #include "Lib/Client.h"
 
-#if _WIN32
+#if defined(_WIN32)
 #include "Windows.h"
 int WINAPI WinMain([[maybe_unused]] _In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance,
                    [[maybe_unused]] _In_ LPSTR lpCmdLine, [[maybe_unused]] _In_ int nCmdShow) {
@@ -22,7 +22,7 @@ int main(int argc, const char** argv) {
   __argv = argv;
 
   if (Client::StaticInit()) {
-    return Client::sInstance->Run();
+    return Client::Instance->Run();
   } else {
     SDL_Quit();
     // error
