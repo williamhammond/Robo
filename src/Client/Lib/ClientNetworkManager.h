@@ -24,7 +24,6 @@ class ClientNetworkManager : public NetworkManager {
   ClientNetworkManager();
   void Init(const SocketAddress& serverAddress, const std::string& name);
 
-  void UpdateSayingHello();
   void SendHelloPacket();
 
   void HandleGameOverPacket(InputMemoryBitStream& inputStream) const;

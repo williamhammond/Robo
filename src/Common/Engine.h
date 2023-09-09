@@ -3,6 +3,7 @@
 #include <memory>
 
 #include "Clock.h"
+#include "SDL_events.h"
 #include "World.h"
 #include "spdlog/spdlog.h"
 
@@ -12,6 +13,8 @@ class Engine {
 
   virtual ~Engine();
   virtual int Run();
+
+  virtual void HandleEvent(SDL_Event* event);
 
   void SetQuit(bool shouldQuit) {
     SPDLOG_INFO("Engine shutting down");

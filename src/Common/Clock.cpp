@@ -29,6 +29,15 @@ Clock::Clock() {
 #endif
 }
 
+void Clock::Update() {
+  double currentTime = GetTime();
+
+  deltaTime = (float)(currentTime - static_cast<double>(lastFrameStartTime));
+
+  lastFrameStartTime = currentTime;
+  frameStartTime = static_cast<float>(lastFrameStartTime);
+}
+
 double Clock::GetTime() const {
 #if defined(_WIN32)
   LARGE_INTEGER curTime, timeSinceStart;

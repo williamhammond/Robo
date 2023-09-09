@@ -48,6 +48,7 @@ void ClientNetworkManager::ProcessPacket(InputMemoryBitStream& inputStream,
       break;
   }
 }
+
 void ClientNetworkManager::SendHelloPacket() {
   OutputMemoryBitStream helloPacket;
 
@@ -66,8 +67,6 @@ void ClientNetworkManager::SendWinPacket() {
   spdlog::info("Sending win packet");
   SendPacket(winPacket, serverAddress);
 }
-
-void ClientNetworkManager::UpdateSayingHello() {}
 
 void ClientNetworkManager::HandleWelcomePacket(InputMemoryBitStream& inputStream) {
   if (state == NCS_SayingHello) {

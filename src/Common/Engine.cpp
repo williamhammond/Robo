@@ -35,6 +35,8 @@ int Engine::Run() {
     if (SDL_PollEvent(&event)) {
       if (event.type == SDL_QUIT) {
         quit = true;
+      } else {
+        HandleEvent(&event);
       }
     }
     double newTime = Clock::Instance.GetTime();
@@ -63,3 +65,5 @@ int Engine::Run() {
 void Engine::Update() {
   World::Instance->Update();
 }
+
+void Engine::HandleEvent([[maybe_unused]] SDL_Event *event) {}
